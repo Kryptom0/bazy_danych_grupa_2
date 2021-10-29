@@ -1,0 +1,38 @@
+
+lab 03
+
+
+
+#Zadanie 1
+
+SELECT * FROM osoba;
+
+CREATE TABLE postac (
+id_postaci int primary key auto_increment,
+nazwa varchar(40) not null,
+rodzaj enum('wiking', 'ptak', 'kobieta'), 
+data_ur date,
+wiek int(3) unsigned 
+);
+
+insert into postac values(default,'Bjorn','wiking','1888-10-10',42),(default,'Drozd','ptak','1990-01-01',44),(default,'Tesciowa','kobieta','1900-05-05',60);
+update postac set wiek=88 where nazwa='Tesciowa';
+#Zadanie 2
+
+CREATE TABLE walizka (
+id_walizki int auto_increment primary key,
+pojemnosc int unsigned,
+kolor set('rozowy','czerwony','teczowy','zolty'),
+id_wlasciciela int,
+foreign key (id_wlasciciela) references postac (id_postaci) on delete cascade
+);
+
+#Zadanie 3
+1
+create table izba (adres_budynku varchar(45), nazwa_izby varchar(45), metraz int unsigned, wlasciciel int, foreign key(wlasciciel) references postac(id_postaci) on delete set null);
+2
+
+
+
+
+
