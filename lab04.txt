@@ -1,0 +1,39 @@
+LAB 04
+Zad 1
+a)
+DELATE from postac WHERE id_postaci IN(7,8);
+
+b)
+SET foreign_key_checks = 0;
+ALTER TABLE postac MODIFY id_postaci int;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+Zad 2
+a)
+ALTER TABLE postac ADD COLUMN pesel VARCHAR (11) AFTER data_ur;
+UPDATE postac SET pesel='12345678900'+ id_postaci;
+ALTER TABLE postac ADD PRIMARY KEY(pesel);
+b)
+ALTER TABLE postac MODIFY rodzaj enum('wiking','ptak','kobieta','syrena');
+c)
+INSERT INTO postac (id_postaci, nazwa, rodzaj, data_ur, pesel, wiek) VALUES (7,'Gertruda Nieszczera','syrena','1920-08-08','00123456789',45);
+Zad 3
+a)
+UPDATE postac SET statek='Daniela' WHERE nazwa LIKE'%a%';
+b)
+UPDATE statek set max_ladownosc=max_ladownosc *0.7 WHERE data_wodowania between '1901-01-01' and '2000-12-31';
+c)
+ALTER TABLE postac ADD CONSTRAINT wiekszy_od_1000 CHECK (wiek<1000);
+
+Zad 4
+a)
+ALTER TABLE postac MODIFY rodzaj enum ('wiking','ptak','kobieta','syrena','waz');
+INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,pesel,wiek) VALUES (8,'Loko','waz','2000-1-2','12345678999',5);
+b)
+CREATE TABLE marynarz LIKE postac;
+INSERT INTO marynarz SELECT*FROM postac WHERE statek IS NOT NULL;
+c)
+ALTER TABLE marynarz ADD FOREIGN KEY(statek)REFERENCESsele
