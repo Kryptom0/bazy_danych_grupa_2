@@ -1,0 +1,92 @@
+Zad 2
+CREATE TABLE walizka (
+id_walizki int primary key auto_increment not null,
+pojemnosc int unsigned,
+kolor set('rozowy','czerwoy','teczowy','zolty'),
+id_wlasciciela int
+);
+
+ALTER TABLE walizka MODIFY kolor set('rozowy','czerwoy','teczowy','zolty') default'rozowy'
+
+
+INSERT INTO walizka VALUES(default,25,'rozowy',1);
+INSERT INTO walizka VALUES(default,50,'czerwoy',3);
+
+Zad3
+a
+CREATE TABLE izba (
+adres_budynku varchar(40) not null,
+nazwa_izby varchar(40) not null,
+metraz int unsigned,
+wlasciciel int,
+FOREIGN key (wlasciciel) references postac(id_postaci) on delete set null,
+primary key(adres_budynku,nazwa_izby)
+);
+
+B
+ALTER TABLE izba ADD COLUMN kolor set('czarny','niebieski','zielony') default'czarny' AFTER metraz;
+
+c 
+INSERT INTO izba VALUES('ulSportowa','spizarnia',25,1);
+
+Zad4
+a 
+CREATE TABLE przetwory (
+id_przetworu int primary key auto_increment,
+rok_produkcji int(4) unsigned default 1654,
+id_wykonawcy INT,
+FOREIGN KEY(id_wykonawcy) references postac(id_postaci) on delete set null,
+zawartosc varchar(50),
+dodatek varchar(50) default'papryczka chilli',
+id_konsumenta int,
+FOREIGN KEY(id_konsumenta) references postac(id_postaci) on delete set null
+);
+
+b
+INSERT INTO przetwory values (default,1500,1,'bigos',DEFAULT,3);
+
+Zad5
+a
+INSERT INTO postac values 
+(default,'Wiking 1','wiking','1600-02-02',40),
+(default,'Wiking 2','wiking','1601-03-03',41),
+(default,'Wiking 3','wiking','1602-04-04',42),
+(default,'Wiking 4','wiking','1603-06-06',43),
+(default,'Wiking 5','wiking','1604-05-05',44);
+
+
+b
+CREATE TABLE statek (
+nazwa_statku varchar(10) primary key,
+rodzaj_statku enum('transportowy','turystyczny','wojenny'),
+data_wodowania date,
+max_ladownosc int unsigned
+);
+
+c
+INSERT INTO statek values ('Daniela','wojenny','1994-07-11',500);
+INSERT INTO statek values ('Krystiana','transportowy','2001-07-27',950);
+
+d
+ALTER TABLE postac ADD column funkcja VARCHAR(50);
+
+e
+UPDATE postac SET funkcja='kapitan' where id_postaci=1;
+
+
+f
+ALTER TABLE postac ADD column statek VARCHAR(50);
+ALTER TABLE postac ADD FOREIGN KEY (statek) REFERENCES statek(nazwa_statku) ON DELETE CASCADE;
+
+g/7
+UPDATE postac SET statek='Daniela' where rodzaj='wiking';
+UPDATE postac SET statek='Krystiana' where id_postaci=2;
+
+
+h/8
+DELETE FROM izba where nazwa_izby='spizarnia';
+
+i/9
+DROP TABLE izba;
+
+END KURWA
