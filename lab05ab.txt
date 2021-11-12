@@ -1,0 +1,77 @@
+Lab05
+Zadanie 1
+a)
+Przypadek 1. Aktywna baza to baza imienna
+CREATE TABLE kreatura SELECT * FROM wikingowie.kreatura;
+Przypadek 2. Aktywna baza to baza wikingowie;
+CREATE TABLE drzaszczk.kreatura SELECT * FROM kreatura;
+CREATE TABLE drzaszczk.zasob SELECT * FROM zasob;
+CREATE TABLE drzaszczk.ekwipunek SELECT * FROM ekwipunek;
+b)
+SELECT * FROM zasob;
+c)
+SELECT * FROm zasob WHERE rodzaj='jedzenie';
+d)
+SELECT * FROM kreatura WHERE id_Postaci=1 or idPostaci=2;
+SELECT * FROM kreatura WHERE id_Postaci IN (1,3,5);
+------------------------------------------------- 
+SELECT idZasobu, ilosc FROM ekwipunek WHERE idKreatury IN (1,3,5);
+Zadanie 2
+a)
+SELECT * FROM kreatura WHERE rodzaj!='wiedzma' and udzwig >=50;
+b)
+SELECT * FROM zasob WHERE  waga >=2 and waga<=5;
+c)
+SELECT * FROM kreatura WHERE nazwa LIKE '%or%' and udzwig >=30 and udzwig <=70;
+Zadanie 3
+a)
+SELECT dataPozyskania FROM zasob WHERE MONTH(dataPozyskania) IN(7,8);
+b)
+select nazwa, rodzaj from zasob;
+select nazwa, rodzaj from zasob where rodzaj='jedzenie';
+select nazwa, rodzaj from zasob where rodzaj=NULL;
+select nazwa, rodzaj from zasob where rodzaj is NULL;   ----- ta wazna
+c)
+..LIMIT 5;
+...LIMIT 5,5; # indeks start, ile elementow
+SELECT * FROM kreatura order by dataUr;
+SELECT * FROM kreatura order by dataUr Limit 5;
+Zadanie 4
+a)
+select distinct rodzaj from zasob;
+b)
+CONCAT(lancuch znakow, lancuch znakow,..)
+SELECT CONCAT('Ala ma kota o imieniu',nazwa) as wierszyk from kreatura;
+SELECT CONCAT (nazwa,rodzaj) from kreatura WHERE rodzaj LIKE '%wi%';
+c)
+SELECT * FROM zasob WHERE YEAR(dataPozyskania) between 2000 and 2007;
+SELECT CONCAT ('nazwa','calkowita waga',ilosc*waga) FROM zasob WHERE YEAR(dataPozyskania) IN(2000,2001,2002,2003,2004,2005,2006,2007);
+Zadanie 5
+a)
+
+
+b)
+
+
+c)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
