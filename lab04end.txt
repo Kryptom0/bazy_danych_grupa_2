@@ -1,0 +1,69 @@
+LAB 04
+Zad 1
+a)
+DELETE from postac WHERE id_postaci IN(7,8);
+
+b)
+SET foreign_key_checks = 0;
+ALTER TABLE postac MODIFY id_postaci int;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+Zad 2
+a)
+ALTER TABLE postac ADD COLUMN pesel VARCHAR (11) AFTER data_ur;
+UPDATE postac SET pesel='12345678900'+ id_postaci;
+ALTER TABLE postac ADD PRIMARY KEY(pesel);
+b)
+ALTER TABLE postac MODIFY rodzaj enum('wiking','ptak','kobieta','syrena');
+c)
+INSERT INTO postac (id_postaci, nazwa, rodzaj, data_ur, pesel, wiek) VALUES (7,'Gertruda Nieszczera','syrena','1920-08-08','00123456789',45);
+Zad 3
+a)
+UPDATE postac SET statek='Daniela' WHERE nazwa LIKE'%a%';
+b)
+UPDATE statek set max_ladownosc=max_ladownosc *0.7 WHERE data_wodowania between '1901-01-01' and '2000-12-31';
+c)
+ALTER TABLE postac ADD CONSTRAINT wiekszy_od_1000 CHECK (wiek<1000);
+
+Zad 4
+a)
+ALTER TABLE postac MODIFY rodzaj enum ('wiking','ptak','kobieta','syrena','waz');
+INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,pesel,wiek) VALUES (8,'Loko','waz','2000-1-2','12345678999',5);
+b)
+CREATE TABLE marynarz LIKE postac;
+INSERT INTO marynarz SELECT*FROM postac WHERE statek IS NOT NULL;
+c) Do dopisania
+ALTER TABLE marynarz ADD FOREIGN KEY(statek) REFERENCES statek(nazwa_statku) on delete set null;
+
+Zad 5
+a)
+UPDATE marynarz SET statek=NULL where statek='Daniela';
+
+b)
+DELETE from marynarz WHERE id_postaci=5;
+
+c)
+DELETE from statek WHERE nazwa_statku='Daniela';
+
+d)
+ALTER TABLE postac DROP FOREIGN KEY postac_ibfk_1; 
+INSERT INTO postac SELECT*FROM marynarz;
+INSERT INTO postac values (5,'Wiking 2','wiking','1601-03-03','13245678900',41,NULL,NULL);
+DELETE from statek WHERE nazwa_statku='Krystiana';
+ALTER TABLE marynarz DROP FOREIGN KEY marynarz_ibfk_1;
+DROP table statek;
+
+e)
+CREATE TABLE zwierz(
+id_zwierza int primary key auto_increment not null,
+nazwa varchar(50),
+wiek int unsigned
+);
+
+f)
+SELECT nazwa,wiek FROM postac;
+SELECT id_postaci,nazwa,wiek FROM postac where rodzaj='ptak' or rodzaj='waz';
+INSERT INTO zwierz SELECT id_postaci,nazwa,wiek FROM postac where rodzaj='ptak' or rodzaj='waz';
