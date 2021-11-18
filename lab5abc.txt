@@ -1,0 +1,13 @@
+/*Zad 4*/
+/*c) Ulepszzenie*/
+/*SELECT CONCAT (nazwa,': calkowita waga: ',ilosc*waga) FROM zasob WHERE YEAR(dataPozyskania) IN(2000,2001,2002,2003,2004,2005,2006,2007);*/
+SELECT * ,waga*ilosc as 'waga calkowita' From zasob where year(dataPozyskania) IN(2000,2001,2002,2003,2004,2005,2006,2007);
+/*Zad 5*/
+/*a)*/
+SELECT * FROM wikingowie.zasob;
+SELECT * FROM drzaszczk.zasob where rodzaj='jedzenie' ;
+SELECT * ,waga*0.7 as 'masa wlasciwa' ,waga*0.3 as 'masa odpadkow' from zasob where rodzaj='jedzenie';
+/*b)*/
+SELECT * FROM zasob where rodzaj is null;
+/*c*/
+SELECT * FROm zasob where nazwa LIKE 'ba%' or nazwa LIKE '%os' order by nazwa;
