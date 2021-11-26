@@ -1,0 +1,74 @@
+Lekcja 4(Lab 06)
+Zad 5
+Pkt 1)
+select k.rodzaj, avg(e.ilosc * z.waga) from kreatura k
+inner join ekwipunek e on k.idKreatury=e.idKreatury
+inner join zasob z on e.idZasobu=z.idZasobu
+where k.rodzaj not in ('malpa','waz')
+group by k.rodzaj having sum(e.ilosc) < 30;
+
+Pkt 2)
+select nazwa from kreatura where rodzaj !='wiking'
+union
+select nazwa from kreatura where rodzaj ='wiking';
+select rodzaj, max(dataUr) from kreatura group by rodzaj;
+
+select nazwa, dataUr, rodzaj
+from kreatura 
+where dataUr in (select max(dataUr) from kreatura) group by rodzaj)
+union
+select nazwa, dataUr, rodzaj
+from kreatura 
+where dataUr in (select min(dataUr) from kreatura group by rodzaj);
+
+select k.nazwa, k.dataUr, k.rodzaj
+from kreatura k, 
+(select min(dataUr) as min, max(dataUr) as max 
+from kreatura group by rodzaj) pod
+where k.dataUr=pod.min or k.dataUr=pod.max;
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Lab 07
+Zad 1
+Pkt 1)
+CREATE TABLE uczestnicy like wikingowie.uczestnicy;
+CREATE TABLE etapy_wyprawy like wikingowie.etapy_wyprawy;
+CREATE TABLE sektor like wikingowie.sektor;
+CREATE TABLE wyprawa like wikingowie.wyprawa;
+INSERT INTO XXX
+SELECT * FROM wikingowie XXX; 
+Pkt 2)
+select * from kreatura k
+inner join uczestnicy u on k.idKreatury=u.id_uczestnika;
+show create table uczestnicy;
+
+select distinct id_uczestnika from uczestnicy;
+select idKreatury from kreatura
+where idKreatury not in (select id_uczestnika from uczestnicy);
+
+Select * from kreatura k
+left join uczestnicy u on k.idKreatury=u.id_uczestnika;
+lub
+
+
+Pkt 3)
+#krok 1 - identyfikacja niezbednych tabeli
+select w.nazwa, sum(e.ilosc) from wyprawa w
+inner join uczestnicy u on.id_wyprawy=u.id_wyprawy
+inner join ekwipunek e on u.id_uczestnika=e.idKreatury
+group by w.nazwa;
+
+
+Zad 2
+Pkt 1)
+select rodzaj, count(*) from kreatura group by rodzaj;
+select rodzaj, group_concat(nazwa separator '|')
+from kreatura group by rodzaj;
+
+Pkt 2)
+
+
+
+
