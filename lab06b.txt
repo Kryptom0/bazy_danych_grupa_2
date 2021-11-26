@@ -1,0 +1,14 @@
+Zad 4
+#natural join
+SELECT * FROM kreatura natural join ekwipunek zasob;
+Pkt 1) 
+Select k.nazwa, z.nazwa from kreatura k INNER JOIN ekwipunek e
+ ON k.idKreatury=e.idKreatury INNER JOIN zasob z ON
+e.idZasobu=z.idZasobu where k.rodzaj = 'wiking' and k.dataUr > '1669.12.31' and k.dataUr < '1680.01.01'; 
+
+Pkt 2) Select k.nazwa from kreatura k INNER JOIN ekwipunek e
+ ON k.idKreatury=e.idKreatury INNER JOIN zasob z ON
+e.idZasobu=z.idZasobu where z.rodzaj = 'jedzenie' order by dataUr desc LIMIT 5;
+
+Pkt 3) Select j.nazwa, j.idKreatury, k.nazwa, k.idKreatury from kreatura k 
+INNER JOIN kreatura j ON k.idKreatury=j.idKreatury+5;
