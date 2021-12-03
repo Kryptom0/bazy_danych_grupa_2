@@ -1,0 +1,54 @@
+Zad 1
+pkt 1
+CREATE TABLE uczestnicy like wikingowie.uczestnicy;
+CREATE TABLE etapy_wyprawy like wikingowie.etapy_wyprawy;
+CREATE TABLE sektor like wikingowie.sektor;
+CREATE TABLE wyprawa like wikingowie.wyprawa;
+INSERT INTO drzaszczk.uczestnicy SELECT * FROM wikingowie.uczestnicy;
+INSERT INTO drzaszczk.wyprawa SELECT * FROM wikingowie.wyprawa;
+.-.
+.-.
+.-.
+pkt 2
+SELECT * FROM uczestnicy
+RIGHT JOIN kreatura
+ON uczestnicy.id_uczestnika = kreatura.idKreatury
+WHERE uczestnicy.id_uczestnika IS NULL;
+
+
+SELECT kreatura.nazwa
+FROM uczestnicy RIGHT JOIN kreatura
+ON uczestnicy.id_uczestnika = kreatura.idKreatury
+WHERE uczestnicy.id_uczestnika IS NULL;
+Pkt 3
+#krok 1 - identyfikacja niezbednych tabeli
+select w.nazwa, sum(e.ilosc) from wyprawa w
+inner join uczestnicy u on.id_wyprawy=u.id_wyprawy
+inner join ekwipunek e on u.id_uczestnika=e.idKreatury
+group by w.nazwa;
+
+SELECT wyprawa.nazwa, COUNT(*), COUNT(ekwipunek.ilosc) AS 'Suma ilosci ekwipunku'
+FROM uczestnicy
+JOIN kreatura ON uczestnicy.id_uczestnika = kreatura.idKreatury
+JOIN wyprawa ON uczestnicy.id_wyprawy = wyprawa.id_wyprawy
+JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury
+JOIN zasob ON ekwipunek.idZasobu = zasob.idZasobu
+GROUP BY wyprawa.nazwa;
+
+Zad 2
+Pkt 1
+SELECT wyprawa.nazwa, COUNT(*) AS 'liczba uczestnikow', GROUP_CONCAT(kreatura.nazwa) AS 'Nazwy uczestnikow' FROM uczestnicy
+inner join kreatura ON uczestnicy.id_uczestnika=kreatura.idKreatury
+inner join wyprawa ON uczestnicy.id_wyprawy=wyprawa.id_wyprawy
+GROUP BY wyprawa.nazwa;
+
+Pkt2
+SELECT wyprawa.nazwa AS 'nazwa wyprawy', etapy_wyprawy.kolejnosc AS 'etap wyprawy', sektor.nazwa AS 'nazwa sektora', kreatura.nazwa AS 'nazwa kierownika' FROM etapy_wyprawy
+inner join sektor ON etapy_wyprawy.sektor = sektor.id_sektora
+inner join wyprawa ON etapy_wyprawy.idWyprawy=wyprawa.id_wyprawy
+inner join kreatura ON kreatura.idKreatury = wyprawa.kierownik
+ORDER BY data_rozpoczecia;
+
+
+
+
